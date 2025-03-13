@@ -1,9 +1,3 @@
-# -----------------------------------------------------------
-# Generative Label Fused Network implementation based on
-# Position Focused Attention Network (PFAN) and Stacked Cross Attention Network (SCAN)
-# the code of PFAN: https://github.com/HaoYang0123/Position-Focused-Attention-Network
-# the code of SCAN: https://github.com/kuanghuei/SCAN
-# ---------------------------------------------------------------
 
 import torch
 import torch.nn as nn
@@ -434,7 +428,6 @@ class SCAN(object):
 
         self.params = params
         self.optimizer = torch.optim.Adam(self.params, lr=opt.learning_rate,eps=1e-08, weight_decay=0)
-#self.optimizer = torch.optim.Adam(params, lr=opt.learning_rate) 原来文章里的都是这个设置？
         self.Eiters = 0
 
     def state_dict(self, opt):
@@ -490,25 +483,19 @@ class SCAN(object):
             self.adj = torch.zeros([batch_size*(36+cap_lens[0]),batch_size*(36+cap_lens[0])])
             if opt.train_dev_log.startswith("train"):
 
-            #     # 
-                # for i in range(batch_size):
-                #     self.adj[i*36:(i+1)*36,i*36:(i+1)*36] = 1
-                # 
+             
+                for i in range(batch_size):
+                     self.adj[i*36:(i+1)*36,i*36:(i+1)*36] = 1
+                 
                 start_index = batch_size*36
-                # for j in range(batch_size):
-                #     self.adj[start_index+j*cap_lens[0]:start_index+j*cap_lens[0]+cap_lens[j],start_index+j*cap_lens[0]:start_index+j*cap_lens[0]+cap_lens[j]] = 1
-#                 # #
+                for j in range(batch_size):
+                     self.adj[start_index+j*cap_lens[0]:start_index+j*cap_lens[0]+cap_lens[j],start_index+j*cap_lens[0]:start_index+j*cap_lens[0]+cap_lens[j]] = 1
+#                 
 
                 for k in range(batch_size):
                     self.adj[k*36:(k+1)*36,start_index+k*cap_lens[0]:start_index+k*cap_lens[0]+cap_lens[k]] = 1
                     self.adj[start_index+k*cap_lens[0]:start_index+k*cap_lens[0]+cap_lens[k],k*36:(k+1)*36] = 1
-                # one = torch.ones_like(self.adj)
-                # zero = one - 1
-                # if torch.cuda.is_available():
-                #     one = one.cuda()
-                #     zero = zero.cuda()
-                # cossim = torch.matmul(self.features,self.features.T)
-                # self.adj = torch.where(cossim > 0, one, zero)
+                
 
             else:
 
@@ -543,9 +530,7 @@ class SCAN(object):
             img_emb_GAT = l2norm(img_emb_GAT, dim=-1)
             cap_emb_GAT = cap_emb.view(batch_size, cap_lens[0], 1024)
             cap_emb_GAT = l2norm(cap_emb_GAT, dim=-1)
-            # # only with GAT
-            # img_emb =img_emb_GAT
-            # cap_emb =cap_emb_GAT
+            
 
             img_emb =torch.cat((img_emb_GAT,img_emb0),dim=2)
             cap_emb =torch.cat((cap_emb_GAT,cap_emb0),dim=2)
