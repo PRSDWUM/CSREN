@@ -1,13 +1,3 @@
-# -----------------------------------------------------------
-# Stacked Cross Attention Network implementation based on 
-# https://arxiv.org/abs/1803.08024.
-# "Stacked Cross Attention for Image-Text Matching"
-# Kuang-Huei Lee, Xi Chen, Gang Hua, Houdong Hu, Xiaodong He
-#
-# Writen by Kuang-Huei Lee, 2018
-
-# ---------------------------------------------------------------
-"""Evaluation"""
 
 from __future__ import print_function
 import os
@@ -292,17 +282,6 @@ def evaluation_ensemble(model_path, model_path2, data_path=None, split='dev', fo
 
         start = time.time()
         
-        #
-        # if opt.cross_attn == 't2i':
-        #     sims = shard_xattn_t2i(img_embs, cap_embs, cap_lens, opt, shard_size=128)
-        #     sims2 = shard_xattn_t2i(img_embs2, cap_embs2, cap_lens2, opt2, shard_size=128)
-        # elif opt.cross_attn == 'i2t':
-        #     sims = shard_xattn_i2t(img_embs, cap_embs, cap_lens, opt, shard_size=128)
-        #     sims2 = shard_xattn_i2t(img_embs2, cap_embs2, cap_lens2, opt2, shard_size=128)
-        # else:
-        #     raise NotImplementedError
-            
-        # 
         sims = shard_xattn_i2t(img_embs, cap_embs, cap_lens, opt, shard_size=128)
         sims2 = shard_xattn_t2i(img_embs2, cap_embs2, cap_lens2, opt2, shard_size=128)
         
@@ -336,17 +315,7 @@ def evaluation_ensemble(model_path, model_path2, data_path=None, split='dev', fo
             cap_lens_shard2 = cap_lens2[i * 5000:(i + 1) * 5000]
 
             start = time.time()
-#          
-#             if opt.cross_attn == 't2i':
-#                 sims = shard_xattn_t2i(img_embs_shard, cap_embs_shard, cap_lens_shard, opt, shard_size=128)
-#                 sims2 = shard_xattn_t2i(img_embs_shard2, cap_embs_shard2, cap_lens_shard2, opt2, shard_size=128)
-#             elif opt.cross_attn == 'i2t':
-#                 sims = shard_xattn_i2t(img_embs_shard, cap_embs_shard, cap_lens_shard, opt, shard_size=128)
-#                 sims2 = shard_xattn_i2t(img_embs_shard2, cap_embs_shard2, cap_lens_shard2, opt2, shard_size=128)
-#             else:
-#                 raise NotImplementedError
-            
-            # 
+
             sims = shard_xattn_i2t(img_embs_shard, cap_embs_shard, cap_lens_shard, opt, shard_size=128)
             sims2 = shard_xattn_t2i(img_embs_shard2, cap_embs_shard2, cap_lens_shard2, opt2, shard_size=128)
             
