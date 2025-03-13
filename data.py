@@ -84,34 +84,7 @@ class PrecompDataset(data.Dataset):
 
         image = torch.Tensor(self.images[int(img_id)])
         target = torch.Tensor(self.captions[int(cap_id)])
-        
-        
-        
-        
-        
-#         #
-#         #-------------------------------------------------------------
-#         if data_split.startswith("test"):
-            
-#             file_imagename = loc + '%s_imagename.txt' % data_split
-#             imagename = []
-#             with open(file_imagename, 'r') as f1:
-#                 for index,line in enumerator(f1):
-#                     imagename[index] = line.strip()
-#             with open('loader_image_name.txt','a') as f2, open('loader_caption_name.txt','a') as f3:
-#                 print(imagename[img_id], end='\n', file = f2)
-#                 print(imagename[int(cap_id/5)], end='\n', file = f3)
-         
-             
-            
-#         #-------------------------------------------------------------
-            
-            
-            
-            
-            
-            
-            
+                 
             
         return image, target, index, img_id
 
