@@ -1,9 +1,4 @@
-# -----------------------------------------------------------
-# Generative Label Fused Network implementation based on
-# Position Focused Attention Network (PFAN) and Stacked Cross Attention Network (SCAN)
-# the code of PFAN: https://github.com/HaoYang0123/Position-Focused-Attention-Network
-# the code of SCAN: https://github.com/kuanghuei/SCAN
-# ---------------------------------------------------------------
+
 """Data provider"""
 
 import torch
