@@ -9,7 +9,7 @@ We recommended the following dependencies:
 <br>* NumPy 1.20.0
 <!-- <br>* TensorBoard -->
 # Download data
-We use the dataset files as SCAN([Stacked cross attention for image-text matching by Kuang-Huei Lee](https://github.com/kuanghuei/SCAN)) , initializing each text word with the BERT base model.
+We use the dataset files as SCAN([Stacked cross attention for image-text matching by Kuang-Huei Lee](https://github.com/kuanghuei/SCAN)) , and initialize each text word with the BERT base model.
 # Training new models
 To train Flickr30K and MS-COCO models:
 <br>* python train.py
