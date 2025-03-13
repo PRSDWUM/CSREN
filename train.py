@@ -14,7 +14,7 @@ from test import test_main
 
 
 def save_path(opt):
-    save_parameter_path = 'MSCOCO_adj_0and1'
+    save_parameter_path = 'newFolderName'
     dataset_name = opt.data_name
     t2iori2t = opt.cross_attn
     embed_size = opt.embed_size
@@ -159,66 +159,7 @@ def main():
             filename='checkpoint_{}_posiAttn_' + '.pth.tar'.format(mode_name,epoch),
             prefix=opt.model_name + '/')
 
-    input_data_name = input('dev_results: choose the dataset name(f30k_precomp or coco_precomp):')
-    if (input_data_name == 'f30k_precomp'):
-        data_path = 'data/f30k_precomp'
-        dataset_name = 'f30k-images'
-        split_name = 'dev'
-        times = 5
-        display_main(opt.model_name, data_path, dataset_name, split_name, times)
-    else:
-        data_path = 'data/coco_precomp'
-        dataset_name = 'coco-images'
-        split_name = 'dev'
-        times = 5
-        display_main(opt.model_name, data_path, dataset_name, split_name, times)
-        
     
-        
-
-    print('--------------------------------------------:')
-    print('--------------finally_test------------------:')
-    test_flag = input('go into the test system(y or n):')
-    if (test_flag == 'y'):
-        ensemble_flag = input('evaluation ensemble or single(y or n):')
-        fold5_flag = input('whether use the fold5 cross validation or not(y or n)')
-        if (fold5_flag == 'y'):
-            fold5 = True
-        else:
-            fold5 = False
-        if(ensemble_flag == 'y'):
-            prefix = os.path.join(os.path,'best_models/')
-            model1_path = prefix + 'model_best_i2t_GAT_'.format(mode_name) + '.pth.tar'
-            model2_path = prefix + 'model_best_t2i_GAT_'.format(mode_name) + '.pth.tar'
-            data_path = os.path.join(opt.data_path, opt.data_name)
-            split = 'test'
-            fold5 = fold5
-            evaluation_ensemble.evalrank(model1_path, model2_path, data_path, split, fold5)
-        else:
-            #
-            prefix = opt.model_name + '/'
-            model_path = prefix + 'model_best_{}_GAT_'.format(mode_name) + '.pth.tar'
-            data_path = os.path.join(opt.data_path, opt.data_name)
-            split = 'test'
-            fold5 = fold5
-            evalrank(model_path, data_path, split, fold5)
-        
-    else:
-        print('The whole work has done!')
-        
-    input_data_name = input('test_results: choose the dataset name(f30k_precomp or coco_precomp):')
-    if (input_data_name == 'f30k_precomp'):
-        data_path = 'data/f30k_precomp'
-        dataset_name = 'f30k-images'
-        split_name = 'test'
-        times = 5
-        display_main(opt.model_name, data_path, dataset_name, split_name, times)
-    else:
-        data_path = 'data/coco_precomp'
-        dataset_name = 'coco-images'
-        split_name = 'test'
-        times = 5
-        display_main(opt.model_name, data_path, dataset_name, split_name, times)
         
     
 def train(opt, train_loader, model, epoch, val_loader):
