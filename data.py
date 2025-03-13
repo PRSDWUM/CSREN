@@ -1,6 +1,4 @@
 
-"""Data provider"""
-
 import torch
 import torch.utils.data as data
 import os
